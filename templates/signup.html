@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crime Prediction Signup</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-image: url(static/02.jpg);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .main-heading {
+      font-size: 36px;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px black;
+      margin-bottom: 10px;
+    }
+    .login-container {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      width: 300px;
+      text-align: center;
+    }
+    .login-container label {
+      display: block;
+      text-align: left;
+      margin: 10px 0 0;
+      font-size: 14px;
+      color: white;
+    }
+    .login-container h2 {
+      margin-bottom: 20px;
+    }
+    .login-container input,
+    .login-container button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+    }
+    .login-container button {
+      background-color: crimson;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .login-container button:hover {
+      background-color: darkred;
+    }
+  </style>
+
+
+  <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBFAGcYvkY-QwXqlWexAWsMQBPbNZyI9Bs",
+      authDomain: "crime-prediction-dfd7d.firebaseapp.com",
+      projectId: "crime-prediction-dfd7d",
+      storageBucket: "crime-prediction-dfd7d.firebasestorage.app",
+      messagingSenderId: "688744929668",
+      appId: "1:688744929668:web:531b42bb28af1adfefa5d1",
+      measurementId: "G-5ZJ4XNX9YD"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+</head>
+
+<body>
+  <h1 class="main-heading">CRIME PREDICTION</h1>
+  <div class="login-container">
+    <h2>Signup</h2>
+    <form id="signupForm">
+      <label for="username">Username:</label>
+      <input name="username" id="username" type="text" placeholder="Enter your username" required>
+
+      <label for="email">Email:</label>
+      <input name="email" id="email" type="email" placeholder="Enter your email" required>
+
+      <label for="password">Password:</label>
+      <input name="password" id="password" type="password" placeholder="Create a password" required>
+
+      <label for="confirmPassword">Confirm Password:</label>
+      <input name="confirmPassword" id="confirmPassword" type="password" placeholder="Confirm your password" required>
+
+      <button type="submit">Signup</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("signupForm");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+
+      try {
+        const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+
+        await user.updateProfile({
+          displayName: username
+        });
+
+        alert("Signup successful!");
+        localStorage.setItem("isLoggedIn", "true");
+        window.location.href = "/";
+      } catch (error) {
+        alert("Signup failed: " + error.message);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Prediction Result</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        canvas {
+            margin-top: 30px;
+        }
+        .crime-rate{
+            font-size: 28px;
+            font-weight: bold;
+            color: crimson;
+            margin: 20px 0;
+        }
+        .crime-rate .crimeRate {
+            font-size: 2px;
+            font-weight: bold;
+            color: black;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container" data-crime="{{ crime_pred }}">
+        <h1>Crime Prediction Result</h1>
+        <p class="crime-rate">Prediction: <span id="crimeRate"></span></p>
+        <canvas id="crimeChart" width="300" height="150"></canvas>
+    </div>
+
+    <script>
+        const container = document.getElementById('container');
+        const dataCrime =  container.getAttribute('data-crime');
+        console.log(dataCrime)
+        const crimeDet = JSON.parse(dataCrime);
+        const crimeRate = parseFloat(crimeDet.prediction)* 100;
+        console.log(crimeDet)
+        document.getElementById("crimeRate").innerText = `${crimeRate.toFixed(2)}% likelihood of ${crimeDet.crime} at ${crimeDet.time} in ${crimeDet.location}.`
+        const crimeData = crimeDet.daily.map(i=>i.crime_rate)
+        crimeData.push(crimeRate);
+        const labels = crimeDet.daily.map(i=>i.date )
+        labels.push("current")
+        const ctx = document.getElementById('crimeChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Crime Rate Over Time (%)',
+                    data: crimeData,
+                    borderColor: 'red',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Crime Rate (%)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

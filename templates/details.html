@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>CRIME PREDICTION</title>
+	<style>
+		input[type="date"] {
+			font-size: 16px;
+			padding: 5px;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+		}
+	</style>
+	<link rel="stylesheet" type="text/css" href="../static/details.css">
+</head>
+<body>
+	<div class="topbar">
+		<p>  CRIME PREDICTION  </p>
+		<ul id="nav-links">
+		<li><a href="/">Home</a></li>
+          <li><a href="/predict">Predict</a></li>
+          <li><a href="" onclick="logout()">Logout</a></li>
+		</ul>
+	  </div>
+	<header>
+		<div class="labels">
+			<div class="disn">
+					<form action="/predict" method="POST">
+
+						<label for="area">Enter an Area:</label>
+						<select id="area" name="area">
+						</select>
+						<label>Enter Date:</label>
+						<input type="date" name="date" required>
+						<label for="crime">Select Crime Type:</label>
+					<select name="crime" id="crime" required></select>
+					 <label>Enter Time:</label>
+						<input type="time" name="time" required>
+						<button type="submit" class="btne">Predict</button></ol>
+					</form>
+				</ul>
+			</div>
+		</div>
+
+		<div class="matter">
+			<div class="dis">
+				<h1>INSTRUCTIONS</h1>
+				<ol>
+					<li>Provide Location Details
+						<span>Enter the area
+						</span>
+					</li>
+					<li>Select Date
+						<span>Input the date for which you want to predict crime. Ensure the year falls within the valid range supported by the system.
+						</span>
+					</li>
+					
+					<li>Choose Type of Crime
+						<span>Select the type of crime (e.g... theft, assault, burglary). Refer to predelined categories provided by the system,</span>
+					</li>
+
+					<li>Select Time
+						<span>Input the Time for which you want to predict crime. Ensure the year falls within the valid range supported by the system.
+						</span>
+					</li>
+
+					<li>Submit the Data
+						<span>Click the Predict button for predictions.</span>
+					</li>
+					
+					<li>Review Predictions
+						<span>Analyze the output, which may include: Expected crime rate.</span>
+					</li>
+					
+					<li>Use Responsibly
+						<span>Remember, predictions are probabilistic and should inform preventive measures, not definitive conclusions</span>
+					</li>
+					
+
+				</ol>
+			</div>
+		</div>
+	</header>
+
+	<script src="js/script.js"></script>
+	<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () =>{
+		  const nav = document.getElementById('nav-links');
+		  const isLoggedIn = localStorage.getItem('isLoggedIn');
+	  
+		  if (isLoggedIn != 'true') {
+			window.location.href = "/";
+		  }
+		});
+		function logout() {
+			localStorage.removeItem('isLoggedIn');
+			window.location.href = "/";
+		  }
+
+
+		  const crimes =  ['IDENTITY THEFT','VEHICLE - STOLEN','FRAUD',  'CYBERCRIME','ROBBERY']
+
+  const crimeSelect = document.getElementById("crime");
+
+  crimes.map(crime => {
+    const option = document.createElement("option");
+    option.value = crime;
+    option.textContent = crime;
+    crimeSelect.appendChild(option);
+});
+
+
+const locations = [
+        'Ameerpet', 'Charminar', 'Basheerbagh',
+        'Hyderguda', 'Jahanuma', 'Begum Bazar',
+        'Kanchanbagh',  'Ibrahimpatnam',
+         'Afzalgunj'
+    ];
+
+    const areaSelect = document.getElementById('area');
+
+    locations.forEach(location => {
+        const option = document.createElement('option');
+        option.value = location;
+        option.textContent = location;
+        areaSelect.appendChild(option);
+    });
+
+	  </script>
+</body>
+</html>

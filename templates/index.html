@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UFT-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>CRIME PREDECTION</title>
+  <style type="text/css">
+  </style>
+<link rel="stylesheet" type="text/css" href="static/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+  <div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+ </div>
+
+
+ <div class="topbar">
+  <p>  CRIME PREDECTION  </p>
+  <ul id='nav-links'></ul>
+</div>
+  
+  <header>
+
+
+    <div class="matter">
+    <div class="dis">
+      <h1>INTRODUCTION</h1>
+      <h6>Crime is a pressing concem that affects the safely and well-being of communities. Our system leverages advanced data analytics and machine learning to provide actionable insights into crime patterns, helping authorities and individuals make informed decisions to enhance security
+        <br>
+        <br>
+        By harnessing the power of data analytics, machine learning, and visualization tools, this platform provides insights into crime patterns, enabling better decision-making for law enforcement, policymakers, and citizens. Our goal is to bridge the gap between raw crime data and actionable intelligence, empowering stakeholders to predict trends, focus resources, and ultimately create safer environments for everyone.
+        <br>
+        <br>
+        With a focus on Hyderabad, this project analyzes localized data to forecast crime rates, idenlily high-risk areas, and offer fargeled recommendations for prevention. If emphasizes a proactive approach to community safety, leveraging technology to minimize threats and ensure a better quality of life for all residents.</h6>
+    </div>
+    <div class="social-links">
+      <a href="#" class="bi bi-facebook" ></a>
+      <a href="#" class="bi bi-twitter" ></a>
+      <a href="#" class="bi bi-instagram" ></a>
+      <a href="#" class="bi bi-linkedin" ></a>
+  </div>
+  </div>
+
+      <div class="page-content">
+      </div>
+
+
+
+  </header>
+  <script>
+    document.addEventListener('DOMContentLoaded', () =>{
+      const nav = document.getElementById('nav-links');
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+  
+      if (isLoggedIn === 'true') {
+        nav.innerHTML = `
+          <li><a href="/">Home</a></li>
+          <li><a href="/predict">Predict</a></li>
+          <li><a href="#" onclick="logout()">Logout</a></li>
+        `;
+      } else {
+        nav.innerHTML = `
+          <li><a href="/login">Login</a></li>
+          <li><a href="/signup">Sign Up</a></li>
+        `;
+      }
+    });
+  
+    function logout() {
+      localStorage.removeItem('isLoggedIn');
+      location.reload();
+    }
+  </script>  
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+
+
+</body>
+</html>
+
+
+
+
+
