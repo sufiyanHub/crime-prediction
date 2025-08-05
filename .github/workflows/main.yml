@@ -1,0 +1,43 @@
+name: CI/CD - Crime Prediction App (ConvBiLSTM)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: yourdockerhub/crime-prediction-convbilstm
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔁 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🐳 Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: 🔨 Build Docker image
+        run: docker build -t $IMAGE_NAME:latest .
+
+      - name: 📤 Push Docker image
+        run: docker push $IMAGE_NAME:latest
+
+  notify-lambda:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📣 Notify via AWS Lambda webhook
+        run: |
+          curl -X POST "$LAMBDA_FUNCTION_URL" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "project": "Crime Prediction using ConvBiLSTM",
+            "status": "✅ Docker image pushed",
+            "image": "'${{ env.IMAGE_NAME }}:latest'"
+          }'
+        env:
+          LAMBDA_FUNCTION_URL: ${{ secrets.LAMBDA_FUNCTION_URL }}
