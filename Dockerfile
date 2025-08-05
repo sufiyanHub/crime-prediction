@@ -1,6 +1,6 @@
 FROM python:3.9
 
-# Install system packages required for TensorFlow
+# Install system packages (for TensorFlow and image libs)
 RUN apt-get update && apt-get install -y \
     build-essential \
     libglib2.0-0 \
