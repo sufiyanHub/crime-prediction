@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy and install dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt  # <-- Make sure 'tensorflow' is in this file
 
 # Copy all source files
 COPY . .
@@ -14,7 +14,7 @@ COPY . .
 # Expose the Flask port
 EXPOSE 5000
 
-# Set environment variable for Flask
+# Set environment variables for Flask
 ENV FLASK_APP=app.py
 ENV FLASK_RUN_HOST=0.0.0.0
 
