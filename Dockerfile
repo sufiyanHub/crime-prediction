@@ -1,22 +1,26 @@
-# Use official Python image
-FROM python:3.9-slim
+FROM python:3.9
 
-# Set working directory
+# Install system packages required for TensorFlow
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
-# Copy and install dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt  # <-- Make sure 'tensorflow' is in this file
 
-# Copy all source files
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
+
 COPY . .
 
-# Expose the Flask port
 EXPOSE 5000
 
-# Set environment variables for Flask
 ENV FLASK_APP=app.py
 ENV FLASK_RUN_HOST=0.0.0.0
 
-# Run the app
 CMD ["flask", "run"]
