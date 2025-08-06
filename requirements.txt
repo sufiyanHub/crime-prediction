@@ -1,5 +1,8 @@
 flask
-tensorflow
-scikit-learn
+gunicorn
+tensorflow==2.13.0  # CPU version
+numpy
 pandas
+scikit-learn
+matplotlib
 joblib
