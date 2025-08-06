@@ -19,8 +19,8 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build Docker image
-        run: docker build -t sufiyanhub/crime-prediction-img:latest .
+      - name: Build Docker image (CPU tag)
+        run: docker build -t sufiyanhub/crime-prediction-img:cpu .
 
-      - name: Push Docker image
-        run: docker push sufiyanhub/crime-prediction-img:latest
+      - name: Push Docker image (CPU tag)
+        run: docker push sufiyanhub/crime-prediction-img:cpu
